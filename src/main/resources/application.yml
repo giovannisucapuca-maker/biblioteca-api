@@ -1,0 +1,48 @@
+spring:
+  application:
+    name: biblioteca-api
+  datasource:
+    url: ${DB_URL:jdbc:postgresql://localhost:5432/biblioteca}
+    username: ${DB_USER:postgres}
+    password: ${DB_PASSWORD:postgres}
+  jpa:
+    hibernate:
+      ddl-auto: ${DDL_AUTO:update}   # En producción usar 'validate' + migraciones (Flyway)
+    open-in-view: false
+    properties:
+      hibernate:
+        format_sql: true
+    show-sql: false
+  data:
+    web:
+      pageable:
+        default-page-size: 10
+        max-page-size: 50
+
+server:
+  port: ${PORT:8080}
+  error:
+    include-stacktrace: never
+
+app:
+  jwt:
+    # Clave Base64 (>= 256 bits). CAMBIAR en producción mediante la variable JWT_SECRET.
+    secret: ${JWT_SECRET:72viRul5UuCgiGTMlJO4nVS4Nusqw450Nz6t7Iu/nTRQBMMH9g3LZGncHO1p3L0n}
+    access-expiration-minutes: ${JWT_ACCESS_MINUTES:15}
+    refresh-expiration-days: ${JWT_REFRESH_DAYS:7}
+  prestamo:
+    max-activos: 3
+    multa-diaria: 1.00
+  seed:
+    enabled: true
+    admin-email: admin@biblioteca.edu
+    admin-password: Admin123!
+    usuario-email: usuario@biblioteca.edu
+    usuario-password: Usuario123
+
+springdoc:
+  swagger-ui:
+    path: /swagger-ui.html
+    operations-sorter: method
+  api-docs:
+    path: /v3/api-docs
